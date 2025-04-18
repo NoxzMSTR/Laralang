@@ -1,9 +1,8 @@
 <?php
-
 namespace Aitor24\Laralang\Builder;
 
 use Aitor24\Laralang\Models\DB_Translation;
-use App;
+use Illuminate\Support\Facades\App;
 
 class Translation
 {
@@ -27,15 +26,15 @@ class Translation
      */
     public function __construct($string, $vars = [])
     {
-        $this->translator = config('laralang.default.translator');
-        $this->debug = config('laralang.default.debug');
-        $this->save = config('laralang.default.autosave');
-        $this->load = config('laralang.default.autoload');
-        $this->from = config('laralang.default.from_lang');
-        $this->to = config('laralang.default.to_lang');
-        $this->string = $string;
+        $this->translator  = config('laralang.default.translator');
+        $this->debug       = config('laralang.default.debug');
+        $this->save        = config('laralang.default.autosave');
+        $this->load        = config('laralang.default.autoload');
+        $this->from        = config('laralang.default.from_lang');
+        $this->to          = config('laralang.default.to_lang');
+        $this->string      = $string;
         $this->translation = $string;
-        $this->vars = $vars;
+        $this->vars        = $vars;
 
         // Checking whether from_lang or to_lang are set as app_locale.
 
@@ -147,11 +146,11 @@ class Translation
     public function checkSave()
     {
         if ($this->save === true) {
-            $trans = new DB_Translation();
-            $trans->string = $this->string;
-            $trans->from_lang = $this->from;
-            $trans->to_lang = $this->to;
-            $trans->translator = $this->translator;
+            $trans              = new DB_Translation();
+            $trans->string      = $this->string;
+            $trans->from_lang   = $this->from;
+            $trans->to_lang     = $this->to;
+            $trans->translator  = $this->translator;
             $trans->translation = $this->translation;
             $trans->save();
 
@@ -189,7 +188,7 @@ class Translation
     private function replaceVars()
     {
         foreach ($this->vars as $key => $var) {
-            $this->translation = str_replace('14741469'.$key, $var, $this->translation);
+            $this->translation = str_replace('14741469' . $key, $var, $this->translation);
         }
     }
 
@@ -205,7 +204,7 @@ class Translation
             }
 
             return $this->string;
-        } elseif (!$this->load || !$this->loadIfExists()) {
+        } elseif (! $this->load || ! $this->loadIfExists()) {
             $this->main();
         }
         $this->replaceVars();
